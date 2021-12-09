@@ -13,15 +13,9 @@ _global_script_classes=[ {
 "class": "Combatant",
 "language": "GDScript",
 "path": "res://combat/combatants/Combatant.gd"
-}, {
-"base": "Node2D",
-"class": "Pawn",
-"language": "GDScript",
-"path": "res://grid_movement/pawns/Pawn.gd"
 } ]
 _global_script_class_icons={
-"Combatant": "",
-"Pawn": ""
+"Combatant": ""
 }
 
 [application]

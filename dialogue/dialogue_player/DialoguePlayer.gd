@@ -6,11 +6,9 @@ var current = 0
 var dialogue_name = ""
 var dialogue_text = ""
 
-signal dialogue_started
 signal dialogue_finished
 
 func start_dialogue():
-	emit_signal("dialogue_started")
 	current = 0
 	index_dialogue()
 	dialogue_text = dialogue_keys[current].text

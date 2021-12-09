@@ -11,12 +11,10 @@ func _ready():
 	combat_screen = get_node(combat_screen)
 	combat_screen.connect("combat_finished", self, "_on_combat_finished")
 	for n in $Exploration/Grid.get_children():
-		if not n.type == n.CellType.ACTOR:
-			continue
 		if not n.has_node("DialoguePlayer"):
 			continue
-		n.get_node("DialoguePlayer").connect("dialogue_finished", self,
-			"_on_opponent_dialogue_finished", [n])
+		if n.type == "opponent":
+			n.connect("opponent_start_combat", self, "_on_opponent_start_combat")
 	remove_child(combat_screen)
 
 
@@ -30,15 +28,16 @@ func start_combat(combat_actors):
 	$AnimationPlayer.play_backwards("fade")
 
 
-func _on_opponent_dialogue_finished(opponent):
+func _on_opponent_start_combat(opponent):
 	if opponent.lost:
 		return
 	var player = $Exploration/Grid/Player
-	var combatants = [player.combat_actor, opponent.combat_actor]
+	var combatants = [player.combat_actor[0], opponent.combat_actor[0]]
 	start_combat(combatants)
 
 
 func _on_combat_finished(winner, _loser):
+
 	remove_child(combat_screen)
 	$AnimationPlayer.play_backwards("fade")
 	add_child(exploration_screen)
@@ -46,6 +45,7 @@ func _on_combat_finished(winner, _loser):
 	if winner.name == "Player":
 		dialogue.dialogue_file = PLAYER_WIN
 	else:
+		_loser.lost = true
 		dialogue.dialogue_file = PLAYER_LOSE
 	yield($AnimationPlayer, "animation_finished")
 	var player = $Exploration/Grid/Player

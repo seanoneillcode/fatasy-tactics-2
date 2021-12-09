@@ -3,35 +3,30 @@ extends TileMap
 enum CellType { ACTOR, OBSTACLE, OBJECT }
 export(NodePath) var dialogue_ui
 
-#func _ready():
-	#for child in get_children():
-		#set_cellv(world_to_map(child.position), child.type)
+func get_cell_entity(cell):
+	for entity in get_children():
+		if world_to_map(entity.position) == cell:
+			return(entity)
 
 
-func get_cell_pawn(cell, type = CellType.ACTOR):
-	for node in get_children():
-		if node.type != type:
-			continue
-		if world_to_map(node.position) == cell:
-			return(node)
-
-
-func request_move(pawn, direction):
-	var cell_start = world_to_map(pawn.position)
+func request_move(entity, direction):
+	var cell_start = world_to_map(entity.position)
 	var cell_target = cell_start + direction
 
 	var cell_tile_id = get_cellv(cell_target)
-	print("cell id: ", cell_tile_id)
+	var tileData = tile_set.getTileData(cell_tile_id)
+	if tileData["is_blocking"]:
+		return
 	
-	#if cell_tile_id == CellType.OBJECT or cell_tile_id == CellType.ACTOR:
-	#		var target_pawn = get_cell_pawn(cell_target, cell_tile_id)
-#			print("Cell %s contains %s" % [cell_target, target_pawn.name])
+	var target_entity = get_cell_entity(cell_target)
+	if target_entity:
+		print("Cell %s contains %s" % [cell_target, target_entity.name])
 
-#			if not target_pawn.has_node("DialoguePlayer"):
-#				return
-#			get_node(dialogue_ui).show_dialogue(pawn, target_pawn.get_node("DialoguePlayer"))
-		
-	#set_cellv(cell_target, CellType.ACTOR)
-	#set_cellv(cell_start, -1)
-	return map_to_world(cell_target)# + cell_size / 2
+		if not target_entity.has_node("DialoguePlayer"):
+			print("target has no dialog")
+			return
+		get_node(dialogue_ui).show_dialogue(entity, target_entity.get_node("DialoguePlayer"))
+		return
+
+	return map_to_world(cell_target)
 		

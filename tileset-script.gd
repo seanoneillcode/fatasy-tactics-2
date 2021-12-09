@@ -1,5 +1,0 @@
-
-
-export var name = "empty"
-
-
