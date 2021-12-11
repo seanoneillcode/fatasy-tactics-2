@@ -1,4 +1,4 @@
 {
-  "dialog_1" : {"name":"Player", "text":"It's treasure!!" },
-  "dialog_2" : {"name":"Player", "text":"Oh wait, it's just friendship..." }
+  "dialog_1" : {"name":" ", "text":"It's treasure!!" },
+  "dialog_2" : {"name":" ", "text":"Oh wait, it's just friendship..." }
 }

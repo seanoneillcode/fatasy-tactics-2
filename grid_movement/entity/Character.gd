@@ -30,7 +30,10 @@ func _process(delta):
 		move_to(target_position)
 	else:
 		set_process(false)
-		yield(get_tree().create_timer(0.2), "timeout")
+		var tree = get_tree()
+		if tree:
+			yield(tree.create_timer(0.2), "timeout")
+		
 		set_process(true)
 
 

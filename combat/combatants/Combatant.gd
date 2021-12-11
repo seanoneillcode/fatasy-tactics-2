@@ -3,6 +3,7 @@ extends Node
 
 export(int) var damage = 1
 export(int) var defense = 1
+export var team = "a"
 var active = false setget set_active
 
 signal turn_finished
@@ -16,7 +17,6 @@ func set_active(value):
 		return
 	if $Health.armor >= $Health.base_armor + defense:
 		$Health.armor = $Health.base_armor
-
 
 func attack(target):
 	target.take_damage(damage)

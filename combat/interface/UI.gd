@@ -17,7 +17,7 @@ func initialize():
 		info.get_node("VBoxContainer/Name").text = combatant.name
 		health.connect("health_changed", health_info, "set_value")
 		$Combatants.add_child(info)
-	$Buttons/GridContainer/Attack.grab_focus()
+#	$Buttons/VBoxContainer/Attack.grab_focus()
 
 
 func _on_Attack_button_up():

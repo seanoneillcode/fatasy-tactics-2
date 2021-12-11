@@ -32,7 +32,7 @@ func _on_opponent_start_combat(opponent):
 	if opponent.lost:
 		return
 	var player = $Exploration/Grid/Player
-	var combatants = [player.combat_actor[0], opponent.combat_actor[0]]
+	var combatants = player.combat_actor + opponent.combat_actor
 	start_combat(combatants)
 
 
@@ -49,7 +49,7 @@ func _on_combat_finished(winner, _loser):
 		dialogue.dialogue_file = PLAYER_LOSE
 	yield($AnimationPlayer, "animation_finished")
 	var player = $Exploration/Grid/Player
-	exploration_screen.get_node("DialogueUI").show_dialogue(player, dialogue)
+	exploration_screen.get_node("Node2D/DialogueUI").show_dialogue(player, dialogue)
 	combat_screen.clear_combat()
 	yield(dialogue, "dialogue_finished")
 	dialogue.queue_free()

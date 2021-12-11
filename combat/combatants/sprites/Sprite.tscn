@@ -25,4 +25,5 @@ tracks/0/keys = {
 anims/take_damage = SubResource( 1 )
 
 [node name="Body" type="Sprite" parent="."]
+position = Vector2( 8, 8 )
 texture = ExtResource( 1 )

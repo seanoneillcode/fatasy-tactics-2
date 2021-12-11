@@ -1,6 +1,7 @@
 extends Node
 
 export(NodePath) var combatants_list
+
 var queue = [] setget set_queue
 var active_combatant = null setget _set_active_combatant
 
@@ -9,13 +10,13 @@ signal active_combatant_changed(active_combatant)
 func _ready():
 	combatants_list = get_node(combatants_list)
 
-
 func initialize():
 	set_queue(combatants_list.get_children())
 	play_turn()
 
 
 func play_turn():
+	$Pointer.set_entity(active_combatant)
 	yield(active_combatant, "turn_finished")
 	get_next_in_queue()
 	play_turn()

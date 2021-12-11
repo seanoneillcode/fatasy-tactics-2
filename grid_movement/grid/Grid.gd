@@ -14,9 +14,6 @@ func request_move(entity, direction):
 	var cell_target = cell_start + direction
 
 	var cell_tile_id = get_cellv(cell_target)
-	var tileData = tile_set.getTileData(cell_tile_id)
-	if tileData["is_blocking"]:
-		return
 	
 	var target_entity = get_cell_entity(cell_target)
 	if target_entity:
@@ -25,7 +22,14 @@ func request_move(entity, direction):
 		if not target_entity.has_node("DialoguePlayer"):
 			print("target has no dialog")
 			return
+			
+		entity.set_active(false)
+#		target_entity._on_dialogue_finished()
 		get_node(dialogue_ui).show_dialogue(entity, target_entity.get_node("DialoguePlayer"))
+		return
+	
+	var tileData = tile_set.getTileData(cell_tile_id)
+	if tileData["is_blocking"]:
 		return
 
 	return map_to_world(cell_target)
