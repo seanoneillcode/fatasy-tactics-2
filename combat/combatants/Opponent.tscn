@@ -12,9 +12,6 @@ team = "b"
 life = 7
 max_life = 7
 
-[node name="Body" parent="Sprite" index="1"]
-position = Vector2( 8, 8 )
-
 [node name="Timer" type="Timer" parent="." index="2"]
 one_shot = true
 

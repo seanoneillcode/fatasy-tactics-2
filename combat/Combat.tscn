@@ -1,4 +1,4 @@
-[gd_scene load_steps=11 format=2]
+[gd_scene load_steps=16 format=2]
 
 [ext_resource path="res://combat/Combat.gd" type="Script" id=1]
 [ext_resource path="res://combat/TurnQueue.gd" type="Script" id=2]
@@ -10,9 +10,23 @@
 [ext_resource path="res://combat/combatants/Opponent.tscn" type="PackedScene" id=8]
 [ext_resource path="res://combat/TempNode.gd" type="Script" id=9]
 [ext_resource path="res://combat/PlayerController.gd" type="Script" id=10]
+[ext_resource path="res://combat/move_tileset.tres" type="TileSet" id=11]
+[ext_resource path="res://combat/MoveMap.gd" type="Script" id=12]
+[ext_resource path="res://theme/theme.tres" type="Theme" id=13]
+[ext_resource path="res://combat/PlayerActionList.gd" type="Script" id=14]
+[ext_resource path="res://combat/interface/ActionButton.tscn" type="PackedScene" id=15]
 
 [node name="Combat" type="Node2D"]
 script = ExtResource( 1 )
+
+[node name="MoveMap" type="TileMap" parent="."]
+z_index = 1
+tile_set = ExtResource( 11 )
+cell_size = Vector2( 16, 16 )
+cell_custom_transform = Transform2D( 16, 0, 0, 16, 0, 0 )
+format = 1
+script = ExtResource( 12 )
+tilemap = NodePath("../TileMap")
 
 [node name="TileMap" type="TileMap" parent="."]
 tile_set = ExtResource( 3 )
@@ -25,9 +39,10 @@ script = ExtResource( 5 )
 [node name="TurnQueue" type="Node" parent="."]
 script = ExtResource( 2 )
 combatants_list = NodePath("../TileMap")
+player_controller = NodePath("../PlayerController")
 
 [node name="Pointer" type="Node2D" parent="TurnQueue"]
-position = Vector2( 32, 32 )
+position = Vector2( 112, 16 )
 script = ExtResource( 6 )
 
 [node name="Sprite" type="Sprite" parent="TurnQueue/Pointer"]
@@ -36,7 +51,47 @@ offset = Vector2( 8, 8 )
 
 [node name="TempNode" type="Node" parent="."]
 script = ExtResource( 9 )
-combat_actor = [ ExtResource( 7 ), ExtResource( 8 ) ]
+combat_actor = [ ExtResource( 7 ), ExtResource( 7 ), ExtResource( 7 ), ExtResource( 8 ) ]
 
 [node name="PlayerController" type="Node" parent="."]
 script = ExtResource( 10 )
+tilemap = NodePath("../TileMap")
+movemap = NodePath("../MoveMap")
+player_action_list = NodePath("../PlayerActionList")
+
+[node name="PlayerActionList" type="VBoxContainer" parent="."]
+visible = false
+margin_left = 16.0
+margin_top = 16.0
+margin_right = 72.0
+margin_bottom = 112.0
+focus_mode = 2
+theme = ExtResource( 13 )
+script = ExtResource( 14 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="ActionButton" parent="PlayerActionList" instance=ExtResource( 15 )]
+margin_right = 56.0
+margin_bottom = 12.0
+
+[node name="ActionButton2" parent="PlayerActionList" instance=ExtResource( 15 )]
+margin_top = 13.0
+margin_right = 56.0
+margin_bottom = 25.0
+
+[node name="ActionButton3" parent="PlayerActionList" instance=ExtResource( 15 )]
+margin_top = 26.0
+margin_right = 56.0
+margin_bottom = 38.0
+
+[node name="ActionButton4" parent="PlayerActionList" instance=ExtResource( 15 )]
+margin_top = 39.0
+margin_right = 56.0
+margin_bottom = 51.0
+
+[node name="ActionButton5" parent="PlayerActionList" instance=ExtResource( 15 )]
+margin_top = 52.0
+margin_right = 56.0
+margin_bottom = 64.0

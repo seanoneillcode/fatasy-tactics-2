@@ -1,22 +1,43 @@
 class_name Combatant
-extends Node
+extends Node2D
+
 
 export(int) var damage = 1
 export(int) var defense = 1
 export var team = "a"
-var active = false setget set_active
-
+var moves = 3
 signal turn_finished
 
-func set_active(value):
-	active = value
-	set_process(value)
-	set_process_input(value)
+var target_position = Vector2()
+var moving = false
+var move_time = 0.0
+var move_amount = 0.0
 
-	if not active:
+export var abilities = ["skip", "cancel"]
+
+var state = ""
+
+func _process(delta):	
+	if moving:
+		var speed = 1
+		move_time += delta
+		if move_time > 0.2:
+			position = target_position
+			moving = false
+			move_time = 0.0
+		else:
+			position = position + (move_amount * delta)
+			return
+
+
+func move(target_position, direction):
+	if moving:
 		return
-	if $Health.armor >= $Health.base_armor + defense:
-		$Health.armor = $Health.base_armor
+	moving = true
+	move_time = 0.0
+	self.target_position = target_position
+	self.move_amount = direction * 16 / 0.2
+
 
 func attack(target):
 	target.take_damage(damage)
@@ -40,3 +61,6 @@ func flee():
 func take_damage(damage_to_take):
 	$Health.take_damage(damage_to_take)
 	$Sprite/AnimationPlayer.play("take_damage")
+
+
+	

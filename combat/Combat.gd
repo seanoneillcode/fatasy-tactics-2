@@ -13,15 +13,12 @@ func initialize(combat_combatants):
 			combatant_instance.get_node("Health").connect("dead", self, "_on_combatant_death", [combatant_instance])
 		else:
 			combatant_instance.queue_free()
-#	$UI.initialize()
 	$TurnQueue.initialize()
 
 
 func clear_combat():
 	for n in $TileMap.get_children():
 		n.queue_free()
-#	for n in $UI/Combatants.get_children():
-#		n.queue_free()
 
 
 func finish_combat(winner, loser):

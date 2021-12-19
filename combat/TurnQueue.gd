@@ -1,6 +1,7 @@
 extends Node
 
 export(NodePath) var combatants_list
+export(NodePath) var player_controller
 
 var queue = [] setget set_queue
 var active_combatant = null setget _set_active_combatant
@@ -9,6 +10,7 @@ signal active_combatant_changed(active_combatant)
 
 func _ready():
 	combatants_list = get_node(combatants_list)
+	player_controller = get_node(player_controller)
 
 func initialize():
 	set_queue(combatants_list.get_children())
@@ -17,6 +19,9 @@ func initialize():
 
 func play_turn():
 	$Pointer.set_entity(active_combatant)
+	if active_combatant.team == "a":
+		print("player turn")
+		player_controller.start_turn(active_combatant)
 	yield(active_combatant, "turn_finished")
 	get_next_in_queue()
 	play_turn()
@@ -24,7 +29,7 @@ func play_turn():
 
 func get_next_in_queue():
 	var current_combatant = queue.pop_front()
-	current_combatant.active = false
+#	current_combatant.active = false
 	queue.append(current_combatant)
 	self.active_combatant = queue[0]
 	return active_combatant
@@ -45,12 +50,12 @@ func set_queue(new_queue):
 		if not node is Combatant:
 			continue
 		queue.append(node)
-		node.active = false
+#		node.active = false
 	if queue.size() > 0:
 		self.active_combatant = queue[0]
 
 
 func _set_active_combatant(new_combatant):
 	active_combatant = new_combatant
-	active_combatant.active = true
+#	active_combatant.active = true
 	emit_signal("active_combatant_changed", active_combatant)
