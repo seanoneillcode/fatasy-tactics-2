@@ -48,6 +48,18 @@ func request_tile_move(cell_target):
 
 	return cell_target
 
+
+func can_target_tile(entity, tile_pos):
+	var cell_tile_id = get_cellv(tile_pos)
+	var tileData = tile_set.getTileData(cell_tile_id)
+	if tileData["is_blocking"]:
+		return false
+	var target_entity = get_cell_entity(tile_pos)
+	if target_entity && target_entity != entity:
+		return false
+	return true
+
+
 func get_cell_entity(cell):
 	for entity in get_children():
 		if world_to_map(entity.position) == cell:

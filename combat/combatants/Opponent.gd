@@ -1,5 +1,10 @@
 extends Combatant
 
+func take_turn():
+	$Timer.start()
+	yield($Timer, "timeout")
+	emit_signal("turn_finished")
+
 #func set_active(value):
 #	if not $Timer.is_inside_tree():
 #		return

@@ -3,20 +3,22 @@ extends TileMap
 
 export(NodePath) var tilemap
 
-# Called when the node enters the scene tree for the first time.
+var moves = []
+
+
 func _ready():
 	tilemap = get_node(tilemap)
 	clear()
 
-var moves = []
 
 func clear_moves():
 	moves.clear()
 	clear()
 
-func generate_moves(entity):
+
+func generate_moves(pos, mov):
 	clear_moves()
-	add_moves(tilemap.world_to_map(entity.position), entity.moves)
+	add_moves(tilemap.world_to_map(pos), mov)
 	for move in moves:
 		set_cellv(move, 0)
 	update_bitmask_region(Vector2(),Vector2(320, 180))
@@ -42,4 +44,28 @@ func add_moves(tile_position, moves_left):
 		add_moves(newTilePos + Vector2(1,0), moves_left - 1)
 		add_moves(newTilePos + Vector2(0,1), moves_left - 1)
 		add_moves(newTilePos + Vector2(0,-1), moves_left - 1)
-#
+
+
+func generate_targets(entity, start_pos, min_range, max_range):
+	clear_moves()
+	var targets = []
+	_get_targets(entity, world_to_map(start_pos), min_range, max_range, Vector2(1,0), targets)
+	_get_targets(entity, world_to_map(start_pos), min_range, max_range, Vector2(0,1), targets)
+	_get_targets(entity, world_to_map(start_pos), min_range, max_range, Vector2(-1,0), targets)
+	_get_targets(entity, world_to_map(start_pos), min_range, max_range, Vector2(0,-1), targets)
+	for target in targets:
+		set_cellv(target, 0)
+	update_bitmask_region(Vector2(),Vector2(320, 180))
+
+
+func _get_targets(entity, start_tile_pos, min_range, max_range, direction, targets):
+	var pos = Vector2(start_tile_pos.x, start_tile_pos.y)
+	for index in range(max_range + 1):
+		var can_target = tilemap.can_target_tile(entity, pos)
+		if can_target:
+			if index >= min_range:
+				if !targets.has(pos):
+					targets.append(pos)
+			pos = pos + direction
+		else:
+			break

@@ -20,8 +20,9 @@ func initialize():
 func play_turn():
 	$Pointer.set_entity(active_combatant)
 	if active_combatant.team == "a":
-		print("player turn")
 		player_controller.start_turn(active_combatant)
+	else:
+		active_combatant.take_turn()
 	yield(active_combatant, "turn_finished")
 	get_next_in_queue()
 	play_turn()
@@ -29,7 +30,6 @@ func play_turn():
 
 func get_next_in_queue():
 	var current_combatant = queue.pop_front()
-#	current_combatant.active = false
 	queue.append(current_combatant)
 	self.active_combatant = queue[0]
 	return active_combatant
@@ -50,12 +50,10 @@ func set_queue(new_queue):
 		if not node is Combatant:
 			continue
 		queue.append(node)
-#		node.active = false
 	if queue.size() > 0:
 		self.active_combatant = queue[0]
 
 
 func _set_active_combatant(new_combatant):
 	active_combatant = new_combatant
-#	active_combatant.active = true
 	emit_signal("active_combatant_changed", active_combatant)
