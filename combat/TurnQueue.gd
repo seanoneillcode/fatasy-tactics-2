@@ -25,6 +25,7 @@ func initialize():
 func next_turn():
 	var active = get_next_in_queue()
 	$Pointer.set_entity(active)
+	$StartPointer.set_entity(active)
 	if currentTeam == "a":
 		player_controller.continue_turn(active)
 	else:

@@ -1,4 +1,4 @@
-[gd_scene load_steps=16 format=2]
+[gd_scene load_steps=18 format=2]
 
 [ext_resource path="res://combat/Combat.gd" type="Script" id=1]
 [ext_resource path="res://combat/TurnQueue.gd" type="Script" id=2]
@@ -15,6 +15,8 @@
 [ext_resource path="res://theme/theme.tres" type="Theme" id=13]
 [ext_resource path="res://combat/PlayerActionList.gd" type="Script" id=14]
 [ext_resource path="res://combat/interface/ActionButton.tscn" type="PackedScene" id=15]
+[ext_resource path="res://combat/start-tile.png" type="Texture" id=16]
+[ext_resource path="res://combat/StartPointer.gd" type="Script" id=17]
 
 [node name="Combat" type="Node2D"]
 script = ExtResource( 1 )
@@ -43,10 +45,19 @@ player_controller = NodePath("../PlayerController")
 
 [node name="Pointer" type="Node2D" parent="TurnQueue"]
 position = Vector2( 112, 16 )
+z_index = 5
 script = ExtResource( 6 )
 
 [node name="Sprite" type="Sprite" parent="TurnQueue/Pointer"]
 texture = ExtResource( 4 )
+offset = Vector2( 8, 8 )
+
+[node name="StartPointer" type="Node2D" parent="TurnQueue"]
+position = Vector2( 112, 16 )
+script = ExtResource( 17 )
+
+[node name="Sprite" type="Sprite" parent="TurnQueue/StartPointer"]
+texture = ExtResource( 16 )
 offset = Vector2( 8, 8 )
 
 [node name="TempNode" type="Node" parent="."]
