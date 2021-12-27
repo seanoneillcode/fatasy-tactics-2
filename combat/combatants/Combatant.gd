@@ -7,8 +7,10 @@ export(int) var defense = 1
 export var team = "a"
 var moves = 3
 signal turn_finished
+var isDone = false
 
 var target_position = Vector2()
+var start_pos = Vector2()
 var moving = false
 var move_time = 0.0
 var move_amount = 0.0
@@ -41,26 +43,34 @@ func move(target_position, direction):
 
 func attack(target):
 	target.take_damage(damage)
-	emit_signal("turn_finished")
+	end_turn()
 
 
 func consume(item):
 	item.use(self)
-	emit_signal("turn_finished")
+	end_turn()
 
 
 func defend():
 	$Health.armor += defense
-	emit_signal("turn_finished")
+	end_turn()
 
 
 func flee():
+	end_turn()
+
+
+func next_combatant():
 	emit_signal("turn_finished")
 
 
 func take_damage(damage_to_take):
 	$Health.take_damage(damage_to_take)
 	$Sprite/AnimationPlayer.play("take_damage")
+	end_turn()
 
 
+func end_turn():
+	self.isDone = true
+	emit_signal("turn_finished")
 	

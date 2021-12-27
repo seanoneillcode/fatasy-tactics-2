@@ -3,6 +3,7 @@ extends Combatant
 func take_turn():
 	$Timer.start()
 	yield($Timer, "timeout")
+	self.isDone = true
 	emit_signal("turn_finished")
 
 #func set_active(value):

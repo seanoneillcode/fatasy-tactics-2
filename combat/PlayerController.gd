@@ -2,7 +2,6 @@ extends Node
 
 
 var current_person
-var start_pos
 
 export(NodePath) var tilemap
 export(NodePath) var movemap
@@ -16,12 +15,13 @@ func _ready():
 	player_action_list = get_node(player_action_list)
 
 func start_turn(person):
-	current_person = person
-	start_pos = Vector2(person.position.x, person.position.y)
-	
+	person.start_pos = Vector2(person.position.x, person.position.y)
 	person.state = "moving"
+
+func continue_turn(person):
+	current_person = person
 	movemap.clear_moves()
-	movemap.generate_moves(start_pos, person.moves)
+	movemap.generate_moves(current_person.start_pos, person.moves)
 
 func _process(delta):
 	if Input.is_action_pressed("ui_exit"):
@@ -46,6 +46,10 @@ func _process(delta):
 				player_action_list.show()
 				player_action_list.set_items(current_person.abilities)
 			
+			# if next player
+			if Input.is_action_just_released("ui_next"):
+				current_person.next_combatant()
+			
 		"picking_action":
 			if Input.is_action_just_released("ui_accept"):
 				var action = player_action_list.get_current_action()
@@ -57,7 +61,7 @@ func _process(delta):
 		"picking_target":
 			if Input.is_action_just_released("ui_accept"):
 				movemap.clear_moves()
-				movemap.generate_moves(start_pos, current_person.moves)
+				movemap.generate_moves(current_person.start_pos, current_person.moves)
 				current_person.state = "picking_action"
 				player_action_list.get_parent().remove_child(player_action_list)
 				current_person.add_child(player_action_list)
