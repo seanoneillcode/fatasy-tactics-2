@@ -5,6 +5,7 @@ signal combat_finished(winner, loser)
 func _ready():
 	initialize($TempNode.combat_actor)
 
+
 func initialize(combat_combatants):
 	for combatant in combat_combatants:
 		var combatant_instance = combatant.instance()

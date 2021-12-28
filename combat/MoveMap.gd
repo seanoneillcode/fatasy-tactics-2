@@ -68,4 +68,14 @@ func _get_targets(entity, start_tile_pos, min_range, max_range, direction, targe
 					targets.append(pos)
 			pos = pos + direction
 		else:
+			if index >= min_range:
+				if !targets.has(pos):
+					targets.append(pos)
 			break
+
+
+func is_valid_target(position):
+	var value = get_cellv(world_to_map(position))
+	if value == 0:
+		return true
+	return false

@@ -18,7 +18,6 @@ func set_items(items):
 		# create button
 		# add it to self tree
 	
-	print("set items")
 	children[0].grab_focus()
 
 func get_current_action():

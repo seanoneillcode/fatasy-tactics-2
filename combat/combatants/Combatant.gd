@@ -15,7 +15,7 @@ var moving = false
 var move_time = 0.0
 var move_amount = 0.0
 
-export var abilities = ["strike", "fireball", "heal", "done", "cancel"]
+export var abilities = ["done"]
 
 var state = ""
 

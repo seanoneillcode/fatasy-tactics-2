@@ -12,6 +12,7 @@ func _ready():
 	combatants_list = get_node(combatants_list)
 	player_controller = get_node(player_controller)
 
+
 func initialize():
 	for combatant in combatants_list.get_children():
 		if combatant.team == "a":
@@ -23,13 +24,11 @@ func initialize():
 
 
 func next_turn():
-	var active = get_next_in_queue()
-	$Pointer.set_entity(active)
-	$StartPointer.set_entity(active)
+	var person = get_next_in_queue()
 	if currentTeam == "a":
-		player_controller.continue_turn(active)
+		player_controller.continue_turn(person)
 	else:
-		active.take_turn()
+		person.take_turn()
 
 
 func get_next_in_queue():
