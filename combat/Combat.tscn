@@ -1,4 +1,4 @@
-[gd_scene load_steps=21 format=2]
+[gd_scene load_steps=22 format=2]
 
 [ext_resource path="res://combat/Combat.gd" type="Script" id=1]
 [ext_resource path="res://combat/TurnQueue.gd" type="Script" id=2]
@@ -18,6 +18,7 @@
 [ext_resource path="res://combat/start-tile.png" type="Texture" id=16]
 [ext_resource path="res://combat/TargetPointer.gd" type="Script" id=17]
 [ext_resource path="res://combat/target_pointer.png" type="Texture" id=18]
+[ext_resource path="res://combat/ActionNode.gd" type="Script" id=19]
 
 [sub_resource type="Animation" id=2]
 resource_name = "bounce"
@@ -157,3 +158,6 @@ z_index = 5
 [node name="Sprite" type="Sprite" parent="PlayerController/StartPointer"]
 texture = ExtResource( 16 )
 offset = Vector2( 8, 8 )
+
+[node name="ActionNode" type="Node" parent="PlayerController"]
+script = ExtResource( 19 )

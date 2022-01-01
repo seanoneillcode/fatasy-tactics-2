@@ -64,8 +64,8 @@ func next_combatant():
 	emit_signal("turn_finished")
 
 
-func take_damage(damage_to_take):
-	$Health.take_damage(damage_to_take)
+func apply_damage(amount):
+	$Health.take_damage(amount)
 	$Sprite/AnimationPlayer.play("take_damage")
 	end_turn()
 

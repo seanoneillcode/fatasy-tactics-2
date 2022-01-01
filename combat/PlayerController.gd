@@ -6,12 +6,15 @@ export(NodePath) var tilemap
 export(NodePath) var movemap
 export(NodePath) var player_action_list
 
+var rng
 var persons = []
 var current_person
+var current_action
 
 var Pointer
 var StartPointer
 var TargetPointer
+var ActionNode
 
 func _ready():
 	tilemap = get_node(tilemap)
@@ -20,6 +23,9 @@ func _ready():
 	Pointer = $Pointer
 	StartPointer = $StartPointer
 	TargetPointer = $TargetPointer
+	ActionNode = $ActionNode
+	rng = RandomNumberGenerator.new()
+	rng.randomize()
 
 
 func start_turn(person):
@@ -68,6 +74,7 @@ func _process(delta):
 					movemap.clear_moves()
 					current_person.flee()
 				else:
+					current_action = action
 					change_to_picking_target_state(action)
 			if Input.is_action_just_released("ui_cancel"):
 				change_to_moving_state()
@@ -79,6 +86,7 @@ func _process(delta):
 				var target = get_valid_target()
 				if target:
 					print("target is valid!")
+					perform_action(target)
 					
 			var direction = get_input_direction()
 			if direction.x != 0 or direction.y != 0:
@@ -87,6 +95,31 @@ func _process(delta):
 		
 	# once all moves done -> change turn
 	# end_turn
+
+
+func perform_action(target):
+	var data = ActionNode.get_action_data(current_action)
+	if not data:
+		print("error")
+		return
+	# check if hit
+	if rng.randi_range(0,6) == 0: # 1 in  6
+		print("miss")
+		end_turn()
+		return
+	var dmg = 10 + rng.randi_range(0,2)
+	target.apply_damage(dmg)
+	print(target.name, " took damge: ", dmg)
+	end_turn()
+
+
+func end_turn():
+	current_action = ""
+	movemap.clear_moves()
+	TargetPointer.hide()
+	Pointer.show()
+	StartPointer.show()
+	current_person.end_turn()
 
 
 func change_to_moving_state():
@@ -101,16 +134,10 @@ func change_to_moving_state():
 func change_to_picking_target_state(action):
 	var min_range = 0
 	var max_range = 0
-	match action:
-		"strike":
-			min_range = 0
-			max_range = 1
-		"heal":
-			min_range = 0
-			max_range = 0
-		"fireball":
-			min_range = 2
-			max_range = 5
+	var data = ActionNode.get_action_data(action)
+	if data:
+		min_range = data["min_range"]
+		max_range = data["max_range"]
 	current_person.state = "picking_target"
 	movemap.generate_targets(current_person, current_person.position, min_range, max_range)
 	TargetPointer.show()
@@ -120,6 +147,7 @@ func change_to_picking_target_state(action):
 
 
 func change_to_picking_action_state():
+	current_action = ""
 	movemap.clear_moves()
 	movemap.generate_moves(current_person.start_pos, current_person.moves)
 	current_person.state = "picking_action"

@@ -4,7 +4,7 @@ signal dead
 signal health_changed(life)
 
 export var life = 0
-export var max_life = 10
+export var max_life = 100
 export var base_armor = 0
 var armor = 0
 
