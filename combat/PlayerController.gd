@@ -10,6 +10,7 @@ var rng
 var persons = []
 var current_person
 var current_action
+var last_input_direction
 
 var Pointer
 var StartPointer
@@ -26,6 +27,7 @@ func _ready():
 	ActionNode = $ActionNode
 	rng = RandomNumberGenerator.new()
 	rng.randomize()
+	last_input_direction = "horizontal"
 
 
 func start_turn(person):
@@ -55,7 +57,9 @@ func _process(delta):
 			if direction.x != 0 or direction.y != 0:
 				var target_position = movemap.request_move(current_person.position, direction)
 				if target_position:
-					current_person.move(target_position, direction)
+					var blocking_entity  = tilemap.get_entity_at_pos(current_person.position + (direction * 16))
+					if not blocking_entity:
+						current_person.move(target_position, direction)
 			Pointer.set_position(current_person.position)
 			
 			# show action list
@@ -163,6 +167,17 @@ func change_to_picking_action_state():
 func get_input_direction():
 	var horizontal = Input.get_action_strength("ui_right") - Input.get_action_strength("ui_left")
 	var vertical = Input.get_action_strength("ui_down") - Input.get_action_strength("ui_up")
+	if horizontal != 0 && vertical != 0:
+		if last_input_direction == "horizontal":
+			horizontal = 0
+		elif last_input_direction == "vertical":
+			vertical = 0
+	else:
+		if horizontal != 0:
+			last_input_direction = "horizontal"
+		if vertical != 0:
+			last_input_direction = "vertical"
+#	last_input_direction = Vector2(horizontal, vertical)
 	return Vector2(horizontal, vertical)
 	
 
