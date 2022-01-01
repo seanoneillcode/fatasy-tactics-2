@@ -67,6 +67,8 @@ func next_combatant():
 func apply_damage(amount):
 	$Health.take_damage(amount)
 	$Sprite/AnimationPlayer.play("take_damage")
+	$Label.text = String(amount)
+	$Label/AnimationPlayer.play("miss")
 	end_turn()
 
 
@@ -74,3 +76,7 @@ func end_turn():
 	self.isDone = true
 	emit_signal("turn_finished")
 	
+
+func evade_attack():
+	$Label.text = "miss"
+	$Label/AnimationPlayer.play("miss")

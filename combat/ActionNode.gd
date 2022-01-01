@@ -5,7 +5,7 @@ func get_action_data(action):
 	match action:
 		"strike":
 			return {
-				"min_range": 0,
+				"min_range": 1,
 				"max_range": 1
 			}
 		"heal":

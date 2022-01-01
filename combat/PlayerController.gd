@@ -107,8 +107,9 @@ func perform_action(target):
 		print("error")
 		return
 	# check if hit
-	if rng.randi_range(0,6) == 0: # 1 in  6
+	if rng.randi_range(0,2) == 0: # 1 in  6
 		print("miss")
+		target.evade_attack()
 		end_turn()
 		return
 	var dmg = 10 + rng.randi_range(0,2)
