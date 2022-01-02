@@ -5,16 +5,11 @@ signal health_changed(life)
 
 export var life = 0
 export var max_life = 100
-export var base_armor = 0
-var armor = 0
-
-func _ready():
-	armor = base_armor
 
 
 func take_damage(damage):
-	life = life - damage + armor
-	if life <= 0:
+	life = life - damage
+	if life < 0:
 		emit_signal("dead")
 	else:
 		emit_signal("health_changed", life)
@@ -28,3 +23,4 @@ func heal(amount):
 
 func get_health_ratio():
 	return life / max_life
+

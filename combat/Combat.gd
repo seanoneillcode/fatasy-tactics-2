@@ -3,7 +3,8 @@ extends Node
 signal combat_finished(winner, loser)
 
 func _ready():
-	initialize($TempNode.combat_actor)
+	print("ready")
+#	initialize($TempNode.combat_actor)
 
 
 func initialize(combat_combatants):
@@ -11,7 +12,7 @@ func initialize(combat_combatants):
 		var combatant_instance = combatant.instance()
 		if combatant_instance is Combatant:
 			$TileMap.add_combatant(combatant_instance)
-			combatant_instance.get_node("Health").connect("dead", self, "_on_combatant_death", [combatant_instance])
+			combatant_instance.connect("death", self, "_on_combatant_death")
 		else:
 			combatant_instance.queue_free()
 	$TurnQueue.initialize()
@@ -22,17 +23,25 @@ func clear_combat():
 		n.queue_free()
 
 
-func finish_combat(winner, loser):
-	emit_signal("combat_finished", winner, loser)
+func finish_combat(winner):
+	print("combat finished, winner: ", winner)
+	emit_signal("combat_finished", winner)
 
 
-func _on_combatant_death(combatant):
-	var winner
-	if not combatant.name == "Player":
-		winner = $TileMap/Player
-	else:
-		for n in $TileMap.get_children():
-			if not n.name == "Player":
-				winner = n
-				break
-	finish_combat(winner, combatant)
+func _on_combatant_death():
+	var teamA = 0
+	var teamB = 0
+	for n in $TileMap.get_children():
+		if n.team == "a" && !n.is_dead():
+			teamA += 1
+		if n.team == "b" && !n.is_dead():
+			teamB += 1
+	if teamA == 0:
+		print("team b wins")
+		# handle this
+		finish_combat("b")
+	if teamB == 0:
+		print("team a wins")
+		finish_combat("a")
+	
+	

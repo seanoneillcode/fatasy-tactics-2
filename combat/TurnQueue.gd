@@ -14,6 +14,10 @@ func _ready():
 
 
 func initialize():
+	teamA = []
+	teamB = []
+	currentTeam = "a"
+	queue = []
 	for combatant in combatants_list.get_children():
 		if combatant.team == "a":
 			teamA.append(combatant)

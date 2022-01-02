@@ -1,9 +1,10 @@
-[gd_scene load_steps=6 format=2]
+[gd_scene load_steps=7 format=2]
 
 [ext_resource path="res://combat/combatants/Combatant.gd" type="Script" id=1]
 [ext_resource path="res://combat/combatants/Health.gd" type="Script" id=2]
 [ext_resource path="res://combat/combatants/sprites/Sprite.tscn" type="PackedScene" id=3]
 [ext_resource path="res://theme/theme.tres" type="Theme" id=4]
+[ext_resource path="res://combat/combatants/sprites/yellow-dead.png" type="Texture" id=5]
 
 [sub_resource type="Animation" id=1]
 resource_name = "miss"
@@ -58,3 +59,8 @@ __meta__ = {
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="Label"]
 anims/miss = SubResource( 1 )
+
+[node name="Dead" type="Sprite" parent="."]
+visible = false
+position = Vector2( 8, 8 )
+texture = ExtResource( 5 )

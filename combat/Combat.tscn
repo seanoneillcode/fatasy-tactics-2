@@ -1,4 +1,4 @@
-[gd_scene load_steps=22 format=2]
+[gd_scene load_steps=20 format=2]
 
 [ext_resource path="res://combat/Combat.gd" type="Script" id=1]
 [ext_resource path="res://combat/TurnQueue.gd" type="Script" id=2]
@@ -6,8 +6,6 @@
 [ext_resource path="res://combat/pointer.png" type="Texture" id=4]
 [ext_resource path="res://combat/TileMap.gd" type="Script" id=5]
 [ext_resource path="res://combat/Pointer.gd" type="Script" id=6]
-[ext_resource path="res://combat/combatants/Player.tscn" type="PackedScene" id=7]
-[ext_resource path="res://combat/combatants/Opponent.tscn" type="PackedScene" id=8]
 [ext_resource path="res://combat/TempNode.gd" type="Script" id=9]
 [ext_resource path="res://combat/PlayerController.gd" type="Script" id=10]
 [ext_resource path="res://combat/move_tileset.tres" type="TileSet" id=11]
@@ -116,7 +114,6 @@ player_controller = NodePath("../PlayerController")
 
 [node name="TempNode" type="Node" parent="."]
 script = ExtResource( 9 )
-combat_actor = [ ExtResource( 7 ), ExtResource( 7 ), ExtResource( 7 ), ExtResource( 8 ) ]
 
 [node name="PlayerController" type="Node" parent="."]
 script = ExtResource( 10 )
@@ -125,6 +122,7 @@ movemap = NodePath("../MoveMap")
 player_action_list = NodePath("../PlayerActionList")
 
 [node name="TargetPointer" type="Node2D" parent="PlayerController"]
+visible = false
 position = Vector2( 112, 16 )
 z_index = 5
 script = ExtResource( 17 )
@@ -139,6 +137,7 @@ autoplay = "bounce"
 anims/bounce = SubResource( 2 )
 
 [node name="Pointer" type="Node2D" parent="PlayerController"]
+visible = false
 position = Vector2( 112, 16 )
 z_index = 20
 script = ExtResource( 6 )
@@ -152,6 +151,7 @@ autoplay = "bounce"
 anims/bounce = SubResource( 1 )
 
 [node name="StartPointer" type="Node2D" parent="PlayerController"]
+visible = false
 position = Vector2( 112, 16 )
 z_index = 5
 
