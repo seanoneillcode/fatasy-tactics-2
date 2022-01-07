@@ -3,6 +3,7 @@ extends TileMap
 enum CellType { ACTOR, OBSTACLE, OBJECT }
 export(NodePath) var dialogue_ui
 
+
 func get_cell_entity(cell):
 	for entity in get_children():
 		if world_to_map(entity.position) == cell:

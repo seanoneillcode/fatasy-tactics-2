@@ -42,6 +42,7 @@ script = ExtResource( 2 )
 life = 10
 
 [node name="Sprite" parent="." instance=ExtResource( 3 )]
+position = Vector2( 0, -4 )
 
 [node name="Label" type="Label" parent="."]
 visible = false

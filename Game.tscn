@@ -2,7 +2,7 @@
 
 [ext_resource path="res://Game.gd" type="Script" id=1]
 [ext_resource path="res://combat/Combat.tscn" type="PackedScene" id=2]
-[ext_resource path="res://grid_movement/Exploration.tscn" type="PackedScene" id=3]
+[ext_resource path="res://exploration/Exploration.tscn" type="PackedScene" id=3]
 
 [sub_resource type="Animation" id=1]
 length = 0.5
@@ -42,7 +42,3 @@ __meta__ = {
 visible = false
 
 [node name="Exploration" parent="." instance=ExtResource( 3 )]
-
-[node name="Camera2D" type="Camera2D" parent="."]
-offset = Vector2( 160, 80 )
-current = true

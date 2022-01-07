@@ -3,8 +3,8 @@ extends Node
 signal combat_finished(winner, loser)
 
 func _ready():
-	print("ready")
 #	initialize($TempNode.combat_actor)
+	$Camera2D.set_follow_node(null)
 
 
 func initialize(combat_combatants):
@@ -39,9 +39,11 @@ func _on_combatant_death():
 	if teamA == 0:
 		print("team b wins")
 		# handle this
+		yield(get_tree().create_timer(2.0), "timeout")
 		finish_combat("b")
 	if teamB == 0:
 		print("team a wins")
+		yield(get_tree().create_timer(2.0), "timeout")
 		finish_combat("a")
 	
 	

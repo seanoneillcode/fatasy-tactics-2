@@ -2,15 +2,15 @@
 
 importer="texture"
 type="StreamTexture"
-path="res://.import/tileset-grass.png-f5626a39aba1fd68d4ec8e4c0fa1a04d.stex"
+path="res://.import/chest.png-12791f14f060f91faae90e1a2f12317d.stex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://grid_movement/grid/grass/tileset-grass.png"
-dest_files=[ "res://.import/tileset-grass.png-f5626a39aba1fd68d4ec8e4c0fa1a04d.stex" ]
+source_file="res://exploration/entity/sprites/chest.png"
+dest_files=[ "res://.import/chest.png-12791f14f060f91faae90e1a2f12317d.stex" ]
 
 [params]
 

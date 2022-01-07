@@ -2,15 +2,15 @@
 
 importer="texture"
 type="StreamTexture"
-path="res://.import/chest.png-0af4fff8aaad80689ac4b8ae7258d68a.stex"
+path="res://.import/blank.png-d217a58e5b80704c151987270b227ffb.stex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://grid_movement/entity/sprites/chest.png"
-dest_files=[ "res://.import/chest.png-0af4fff8aaad80689ac4b8ae7258d68a.stex" ]
+source_file="res://blank.png"
+dest_files=[ "res://.import/blank.png-d217a58e5b80704c151987270b227ffb.stex" ]
 
 [params]
 
