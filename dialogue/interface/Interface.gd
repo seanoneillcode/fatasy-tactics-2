@@ -26,7 +26,11 @@ func updateText():
 	print("update text")
 	if !dialogue_node:
 		return
-	$Name.text = dialogue_node.dialogue_name
+	if dialogue_node.dialogue_name != " ":
+		$Name.text = dialogue_node.dialogue_name + ":"
+	else:
+		$Name.text = dialogue_node.dialogue_name
+	
 	$Text.text = dialogue_node.dialogue_text
 
 func _on_dialogue_finished(player):

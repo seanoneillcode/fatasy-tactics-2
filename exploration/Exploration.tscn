@@ -1,4 +1,4 @@
-[gd_scene load_steps=13 format=2]
+[gd_scene load_steps=14 format=2]
 
 [ext_resource path="res://exploration/grid/grass/grass-tileset.tres" type="TileSet" id=1]
 [ext_resource path="res://combat/combatants/Player.tscn" type="PackedScene" id=2]
@@ -12,6 +12,7 @@
 [ext_resource path="res://exploration/Exploration.gd" type="Script" id=10]
 [ext_resource path="res://dialogue/dialogue_player/DialoguePlayer.tscn" type="PackedScene" id=11]
 [ext_resource path="res://exploration/entity/Opponent.gd" type="Script" id=12]
+[ext_resource path="res://combat/combatants/sprites/skeleton.png" type="Texture" id=13]
 
 [node name="Exploration" type="Node2D"]
 script = ExtResource( 10 )
@@ -33,6 +34,11 @@ combat_actor = [ ExtResource( 2 ) ]
 position = Vector2( 64, 112 )
 script = ExtResource( 12 )
 combat_actor = [ ExtResource( 3 ) ]
+
+[node name="Sprite" parent="Grid/Opponent" index="1"]
+texture = ExtResource( 13 )
+hframes = 1
+vframes = 1
 
 [node name="DialoguePlayer" parent="Grid/Opponent" instance=ExtResource( 11 )]
 dialogue_file = "res://dialogue/dialogue_data/npc.json"
@@ -62,3 +68,5 @@ layer = 5
 visible = false
 margin_top = 20.0
 margin_bottom = 16.0
+
+[editable path="Grid/Opponent"]
